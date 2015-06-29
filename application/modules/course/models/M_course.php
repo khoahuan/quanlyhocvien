@@ -31,7 +31,8 @@ class M_course extends CI_Model {
 	}
 	public function get_info($data){
 		$this->db->where('ma_khoa', $data);
-		return $this->db->get('khoa_hoc')->result()[0];
+		$arr = $this->db->get('khoa_hoc')->result();
+		return $arr[0];
 	}
 
 }

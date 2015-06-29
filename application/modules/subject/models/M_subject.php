@@ -24,8 +24,20 @@ class M_subject extends CI_Model {
 	}
 	public function get_info($data){
 		$this->db->where('ma_mon', $data);
-		return $this->db->get('mon_hoc')->result()[0];
+		$arr = $this->db->get('mon_hoc')->result();
+		return $arr[0];
 	}
+	public function get_tiet_canh_bao($data){
+      $arr = $this->get_info($data);
+      $lt=$arr->ly_thuyet*20/100;
+      $th=$arr->thuc_hanh*15/100;
+      $arr = array('LT'=>$lt,
+      						'TH'=>$th);
+      return $arr;
+
+
+
+    }
 
 }
 

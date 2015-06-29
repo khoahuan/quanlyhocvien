@@ -32,7 +32,8 @@ class M_lop extends CI_Model {
 	}
 	public function get_info($data){
 		$this->db->where('ma_lop', $data);
-		return $this->db->get('lop')->result()[0];
+		$arr = $this->db->get('lop')->result();
+		return $arr[0];
 	}
 
 }

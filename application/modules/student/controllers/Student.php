@@ -14,32 +14,46 @@ class Student extends CI_Controller {
 		$this->load->model('lop/M_lop');
 		$this->load->model('homeroom/M_homeroom');
 		$this->load->model('user/M_user');
+		//check quyen dang nhap
+		if(!$this->M_user->check_login()){
+			redirect('user/login','refresh');
+		}
 		$this->sdt=$this->M_user->get_info()->sdt;
+
 	}
 	public function index($tam = null,$ma_hocvien = null)
 	{
+		$fld=($this->input->post(NULL, FALSE));
+		//print_r($fld);
 		$ho_hocvien='';
 		$ten_hocvien='';
 		$data['cap_nhat']="them";
-		$v_sm="Add";
+		$v_sm="Thêm";
 		if (!isset($ma_hocvien)) {
              $ma_hocvien = $this->uri->segment(3,null);
         }
 		
 		$arr =  array();
+		$temp_ma_khoa='';
+		$temp_ma_lop='';
 		$list_khoa =$this->M_course->list_course($this->sdt);
 		if (!empty($list_khoa)) {
 			foreach ($list_khoa as $k) {
                 array_push($arr, array($k->ma_khoa => $k->ten_khoa));
         	}
         	$a=array_keys($arr[0]);
+        	
         	$temp_ma_khoa=$a[0];
+        	if(isset($fld['ma_khoa'])){
+        		$temp_ma_khoa= $fld['ma_khoa'];
+			}
         	$list_lop = $this->M_lop->list_lop($this->sdt,$temp_ma_khoa);
 		}
         
         
 		$data['khoa_hoc']= $arr;
 		$data['v_khoa_hoc']=$temp_ma_khoa;
+		
 		$arr =  array();
 		
 		if (!empty($list_lop)) {
@@ -47,10 +61,14 @@ class Student extends CI_Controller {
                 array_push($arr, array($k->ma_lop => $k->ten_lop));
         	}
         	$a=array_keys($arr[0]);
+
         	$temp_ma_lop=$a[0];
-        	$data['v_lop_hoc']=$temp_ma_lop;
+        	if(isset($fld['ma_lop'])){
+        		$temp_ma_lop= $fld['ma_lop'];
+			}
+        	
 		}
-        
+        $data['v_lop_hoc']=$temp_ma_lop;
 		$data['lop_hoc']= $arr;
 		$data['tinh_trang']=array('HOC'=>'Học',
 									'NGHI'=>'Nghỉ',
@@ -123,7 +141,7 @@ class Student extends CI_Controller {
 		
 		$data['sm'] = array(
                                 'value' => $v_sm,
-                                'class' => 'btn btn-default btn-success'
+                                'class' => 'btn btn-default btn-success tbl_up'
                         );
 		$arr= array('active','success','info','warning','danger');
 		
@@ -142,7 +160,7 @@ class Student extends CI_Controller {
                   <td>'.$k->ten_hocvien.'</td>
                   <td>'.$k->tinh_trang.'</td>
                   <td class="text-center"><a href="'.$url_up.'">Edit</a>
-                        || <a href="'.$url_del.'">Del</a>
+                        || <a href="javascript:confirmDelete(\''.$url_del.' \')">Del</a>
                   </td>
                 </tr>';
             $i = ($i==4)? 0:$i;
@@ -188,7 +206,8 @@ class Student extends CI_Controller {
         }
         $fld=($this->input->post(NULL, FALSE));
         if (empty($fld)) {
-            $this->load->view('home/V_error');get_info()->sdt;
+            $this->load->view('home/V_error');
+            ;
             return;
         }
 		$fld['ma_hocvien'] = str_replace(" ", "", $fld['ma_hocvien']);
@@ -218,7 +237,8 @@ class Student extends CI_Controller {
         {
             return $this->index(null,$fld['ma_hocvien']);
         }
-        $fld['ma_pc_cn']=$this->M_homeroom->get_ma_pc_cn($this->sdt,$fld['ma_khoa'],$fld['ma_lop']);
+        //print_r($fld);
+        $fld['ma_pc_cn'] = $this->M_homeroom->get_ma_pc_cn($fld['ma_khoa'],$fld['ma_lop']);
         unset($fld['ma_khoa']);
         unset($fld['ma_lop']);
 		$this->M_student->updata_student($fld);

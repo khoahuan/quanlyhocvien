@@ -6,9 +6,19 @@ class Course extends CI_Controller {
 	{
 		parent::__construct();
 		//Do your magic here
+        $this->load->model('user/M_user');
+        //check quyen dang nhap
+        if(!$this->M_user->check_login()){
+            redirect('user/login','refresh');
+        }
+        $info = $this->session->userdata('user');
+        if($info['cap_bac']==1){
+            redirect('home','refresh');
+        }
 		$this->load->helper(array('form','url'));
 		$this->load->library('form_validation');
 		$this->load->model('M_course');
+
 	}
 
 	public function index($tam = null,$ma_khoa = null)
@@ -26,8 +36,8 @@ class Course extends CI_Controller {
                             );
 		$data['sm'] = array(
                                 'name'  => 'sm',
-                                'value' => 'Add',
-                                'class' => ' btn-default btn-success'
+                                'value' => 'Thêm',
+                                'class' => 'btn btn-default btn-success tbl_up'
                         );
 		if ($ma_khoa != null && $tam!="del") {
 			if ($this->M_course->check_course($ma_khoa)==0) {
@@ -47,8 +57,8 @@ class Course extends CI_Controller {
                             );
 			$data['sm'] = array(
                                 'name'  => 'sm',
-                                'value' => 'Edit',
-                                'class' => ' btn-default btn-success'
+                                'value' => 'Cập nhật',
+                                'class' => 'btn btn-default btn-success tbl_up'
                         );
 		}
 		
@@ -73,7 +83,7 @@ class Course extends CI_Controller {
                   <td>'.$k->ma_khoa.'</td>
                   <td>'.$k->ten_khoa.'</td>
                   <td class="text-center"><a href="'.$url_up.'">Edit</a>
-                        || <a href="'.$url_del.'">Del</a>
+                        || <a href="javascript:confirmDelete(\' '.$url_del.'\')">Del</a>
                   </td>
                 </tr>';
             $i = ($i==4)? 0:$i;

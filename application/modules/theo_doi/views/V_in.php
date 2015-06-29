@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Title Page</title>
+		<title>Danh sách sổ theo dõi</title>
 
 		<!-- Bootstrap CSS -->
 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
@@ -18,7 +18,7 @@
 		<![endif]-->
 	</head>
 	<body>
-		<h1 class="text-center"><a href="<?= base_url('/home'); ?>">SỔ THEO DÕI</a></h1>
+		<h1 class="text-center">SỔ THEO DÕI</h1>
 		<div class="container">
 				<table class="table table-bordered" style="max-width:290px">
 			      <tbody>
@@ -42,13 +42,13 @@
 			      <thead>
 			        <tr>
 			          <th rowspan="2">Ngày</th>
-			          <th rowspan="2">Buổi</th>
+			          <th rowspan="2">B</th>
 			          <th rowspan="2">QS</th>
 			          <th rowspan="2">HD</th>
 			          <th rowspan="2">V</th>
 			          <th rowspan="2">Tên HV vắng</th>
 			          <th rowspan="2">Môn Học</th>
-			          <th rowspan="2">Phòng Học</th>
+			          <th style="max-width: 50px;" rowspan="2">Phòng Học</th>
 			          <th colspan="3">Giáo viên</th>
 			          <th rowspan="2">Ký Tên</th>
 			          <th rowspan="2">Ghi chú</th>

@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>FORM UPDATA</title>
+		<title>SỔ THEO DÕI</title>
 
 		<!-- Bootstrap CSS -->
 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
@@ -29,7 +29,7 @@
 		
 		<?php echo form_open('theo_doi/'.$cap_nhat,'class="navbar-form "'); ?>
 		<div class="row">
-			<h1 class="text-center "><a href="<?= base_url('/home'); ?>">FORM NHẬP SỔ THEO DÕI</a></h1>
+			<h1 class="text-center "><a href="<?= base_url('/home'); ?>">CẬP NHẬT SỔ THEO DÕI</a></h1>
 			<div class="col-xs-12 col-sm-4 col-md-4">
 				<?php
 					if (isset($ngay)) {
@@ -37,6 +37,7 @@
 					}
 				?>
 				<h5 >Khóa</h5>
+				<?php echo form_error('ma_khoa','<div class="error">','</div>'); ?>
 				<?php
 					if ($cap_nhat=="sua") {
 							echo form_input($ma_khoa);
@@ -74,6 +75,10 @@
 						}else{
 							echo form_dropdown('ma_buoi', $buoi, $v_buoi ,'class="form-control" ');
 						}
+				?>
+				<h5>Loại:</h5>
+				<?php
+					echo form_dropdown('loai', $loai, $v_loai ,'class="form-control" ');
 				?>
 				<h5>Quân số</h5>
 				<?php echo form_error('quan_so','<div class="error">','</div>'); ?>

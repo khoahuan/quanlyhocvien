@@ -1,4 +1,5 @@
-$(document).ready(function() {
+﻿$(document).ready(function() {
+    var base_url="/qltheodoi";
     $("#ma_khoa").change(function() {
         var ma_khoa = "";
         var ma_lop = "";
@@ -37,12 +38,12 @@ $(document).ready(function() {
       $( "#ma_khoa_student  option:selected" ).each(function() {
         ma_khoa = $( this ).val();
       });
-      $.post('/theodoi/student/change_class', {ma_khoa: ma_khoa}, function(data) {
+      $.post(base_url+'/student/change_class', {ma_khoa: ma_khoa}, function(data) {
         console.log(data);
         $('#ma_lop_student').html(data);
         $( "#ma_lop_student  option:selected" ).each(function() {
           ma_lop = $( this ).val();
-          $.post('/theodoi/student/list_student', {ma_khoa: ma_khoa,ma_lop: ma_lop}, function(data) {
+          $.post(base_url+'/student/list_student', {ma_khoa: ma_khoa,ma_lop: ma_lop}, function(data) {
             console.log(data);
             $('#main_student').html(data);
             $('#class_name').html("DS LỚP "+ma_lop+'_'+ma_khoa);
@@ -61,12 +62,21 @@ $(document).ready(function() {
       $( "#ma_lop_student  option:selected" ).each(function() {
           ma_lop = $( this ).val();
         });
-      $.post('/theodoi/student/list_student', {ma_khoa: ma_khoa,ma_lop :ma_lop}, function(data) {
+      $.post(base_url+'/student/list_student', {ma_khoa: ma_khoa,ma_lop :ma_lop}, function(data) {
         $('#main_student').html(data);
         $('#class_name').html("DS LỚP "+ma_lop+'_'+ma_khoa);
       });
 
     });
-
+    $(".click-show-more").click(function() {
+        ($(this).html() === "Ẩn ▲") ? ($(this).html("Hiện ▼"),$(".tbl_up").addClass("tbl_more")) :
+               ($(this).html("Ẩn ▲"),$(".tbl_up").removeClass("tbl_more"));
+    });
 
 });
+
+function confirmDelete(delUrl) {
+  if (confirm("Are you sure you want to delete")) {
+    document.location = delUrl;
+  }
+}

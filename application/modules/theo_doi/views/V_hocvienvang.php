@@ -4,11 +4,11 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>FORM UPDATA</title>
+		<title>CẬP NHẬT DANH SÁCH HỌC SINH VẮNG</title>
 
 		<!-- Bootstrap CSS -->
 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
-
+		<script src="<?= base_url('public/js/function.js'); ?>" async defer></script>
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
@@ -27,12 +27,19 @@
 		<?php echo form_open('theo_doi/'.$cap_nhat,'class="navbar-form "'); ?>
 		<div class="row">
 			<h1 class="text-center ">
-				<a href="<?= base_url('theo_doi/them'); ?>">FORM CẬP NHẬT HỌC VIÊN VẮNG</a>
+				<a href="<?= base_url('theo_doi/them'); ?>">CẬP NHẬT HỌC VIÊN VẮNG</a>
 			</h1>
-			<div class="col-xs-8 col-sm-4 col-md-5">
+			<div class=".col-xs-8 col-sm-4 col-md-3">
 				<h5>Chọn học viên vắng:</h5>
 				<?= form_dropdown('ma_hocvien', $hocvien, '','class="form-control"');	?>
 				<?= form_hidden($hidden); ?>
+			</div>
+			<div class=".col-xs-4 col-sm-4 col-md-8">
+				<h5>Chọn Phép:</h5>
+				<select name="phep" class="form-control">
+					<option value="1">Có</option>
+					<option value="0">Không</option>					
+				</select>
 			</div>
 
 			
@@ -52,6 +59,7 @@
 			          <th>Mã Học viên</th>
 			          <th>Họ Học Viên</th>
 			          <th>Tên Học Viên</th>
+			          <th>Phép</th>
 			          <th></th>
 			        </tr>
 

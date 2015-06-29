@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Profile</title>
+		<title>Thông Tin</title>
 
 		<!-- Bootstrap CSS -->
 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
@@ -32,7 +32,10 @@
 			    -moz-box-sizing: border-box;
 			    box-sizing: border-box;
 			}
-
+			.home{
+				margin: 0 auto !important;
+  				float: none;
+			}
 			.card .card-heading {
 			    padding: 0 20px;
 			    margin: 0;
@@ -259,15 +262,15 @@
 			.error{
 				color: red;
 			}
-			.btn{ border-radius: 50%; width:32px; height:32px; line-height:18px;  }
+			
 		</style>
 	</head>
 	<body>
 		<div class="container">
 			<div class="row">
 
-				<div class="col-lg-6 col-sm-6">
-					<h2 class="text-center"><a href="<?= base_url("home") ?>">PROFILE USER</a></h2>
+				<div class="col-lg-6 col-sm-6 home">
+					<h2 class="text-center"><a href="<?= base_url("home") ?>">THÔNG TIN TÀI KHOẢN</a></h2>
 		            <div class="card hovercard">
 		                <div class="cardheader">
 

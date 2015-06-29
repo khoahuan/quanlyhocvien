@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>FORM LOGIN</title>
+		<title>ĐĂNG NHẬP HỆ THỐNG</title>
 
 		<!-- Bootstrap CSS -->
 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
@@ -15,6 +15,11 @@
 			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
+		<style type="text/css" media="screen">
+			.error{
+				color: red;
+			}
+		</style>
 	</head>
 	<body>
 		<div class="container" style="padding-top:80px">
@@ -33,12 +38,12 @@
 					    	  		<?= form_input($sdt); ?>
 					    		</div>
 					    		<div class="form-group">
-					    		<?php echo form_error('mat_khau'); ?>
+					    		<?php echo form_error('mat_khau','<div class="error">', '</div>'); ?>
 					    			<?= form_input($mat_khau); ?>
 					    		</div>
 					    		<div class="checkbox">
 						    	    	<label>
-						    	    		<?= $v_error ?>
+						    	    		<div class="error"><?= $v_error ?></div>
 						    	    	</label>
 						    	    </div>
 					    		<input class="btn btn-lg btn-success btn-block" type="submit" value="Login">

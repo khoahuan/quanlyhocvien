@@ -7,6 +7,15 @@ class Homeroom extends CI_Controller {
 		parent::__construct();
 		//Do your magic here
 		$this->load->model('user/M_user');
+        $this->load->model('user/M_user');
+        //check quyen dang nhap
+        if(!$this->M_user->check_login()){
+            redirect('user/login','refresh');
+        }
+        $info = $this->session->userdata('user');
+        if($info['cap_bac']==1){
+            redirect('home','refresh');
+        } 
 		$this->load->model('lop/M_lop');
 		$this->load->model('course/M_course');
 		$this->load->model('M_homeroom');
@@ -17,8 +26,8 @@ class Homeroom extends CI_Controller {
 	{
 		
 		$data['sm'] = array(
-                                'value' => 'Add',
-                                'class' => ' btn-default btn-success'
+                                'value' => 'Thêm',
+                                'class' => 'btn btn-default btn-success tbl_up'
                         );
 		$arr =  array();
         //print_r($this->M_lop->list_lop());
@@ -54,7 +63,7 @@ class Homeroom extends CI_Controller {
                   <td>'.$k->ma_lop.'</td>
                   <td>'.$k->sdt.'</td>
                   <td class="text-center">
-                  	<a href="'.$url_del.'">Del</a>
+                  	<a href="javascript:confirmDelete(\''.$url_del.' \')">Del</a>
                   </td>
                 </tr>';
             $i = ($i==4)? 0:$i;

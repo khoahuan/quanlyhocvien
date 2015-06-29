@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 08, 2015 at 08:35 AM
+-- Generation Time: Jun 29, 2015 at 02:39 PM
 -- Server version: 5.5.34
 -- PHP Version: 5.4.22
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `ds_hv_vang` (
   `ma_hocvien` char(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `ma_theodoi` int(11) NOT NULL,
+  `phep` varchar(5) DEFAULT '1',
   PRIMARY KEY (`ma_hocvien`,`ma_theodoi`),
   KEY `ma_theodoi` (`ma_theodoi`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -37,9 +38,15 @@ CREATE TABLE IF NOT EXISTS `ds_hv_vang` (
 -- Dumping data for table `ds_hv_vang`
 --
 
-INSERT INTO `ds_hv_vang` (`ma_hocvien`, `ma_theodoi`) VALUES
-('k13.01', 32),
-('k13.01', 40);
+INSERT INTO `ds_hv_vang` (`ma_hocvien`, `ma_theodoi`, `phep`) VALUES
+('140301', 1, '1'),
+('140301', 6, '1'),
+('140303', 3, '1'),
+('140304', 2, '0'),
+('140307', 2, '1'),
+('140501', 9, '1'),
+('140503', 9, '1'),
+('140507', 9, '1');
 
 -- --------------------------------------------------------
 
@@ -63,8 +70,11 @@ CREATE TABLE IF NOT EXISTS `giao_vien` (
 --
 
 INSERT INTO `giao_vien` (`mail`, `sdt`, `ho`, `ten`, `gioitinh`, `mat_khau`, `cap_bac`) VALUES
-('tuan@tuan.com', '0123456789', 'Trần', 'Tuấn', NULL, 'e10adc3949ba59abbe56e057f20f883e', 2),
-('n.h.khoa@live.com', '0976586653', 'Nguyễn Hoàng', 'Khoa', NULL, 'e10adc3949ba59abbe56e057f20f883e', 1),
+('huynhthanhxuancnttqk9@gmail.com', '01214972969', 'Huỳnh Thanh', 'Xuân', NULL, 'e10adc3949ba59abbe56e057f20f883e', 2),
+('ndmhoang91@gmail.com', '01299506597', 'Nguyễn Đặng Minh', 'Hoàng', NULL, 'e10adc3949ba59abbe56e057f20f883e', 1),
+('ptd1107kdn@gmail.com', '01682836876', 'Phạm Trường', 'Duy', NULL, 'e10adc3949ba59abbe56e057f20f883e', 1),
+('thanhtuoi2008@gmail.com', '0932885489', 'Nguyễn Thành', 'Tươi', NULL, 'e10adc3949ba59abbe56e057f20f883e', 1),
+('nhtrung09@gmail.com', '0949845449', 'Nguyễn Hữu', 'Trung', NULL, 'e10adc3949ba59abbe56e057f20f883e', 1),
 ('n.k.huan91@gmail.com', '0989826331', 'Nguyễn Khoa', 'Huân', 1, 'e10adc3949ba59abbe56e057f20f883e', 2);
 
 -- --------------------------------------------------------
@@ -79,6 +89,8 @@ CREATE TABLE IF NOT EXISTS `hoc_vien` (
   `ho_hocvien` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
   `ten_hocvien` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
   `ngay_sinh` date NOT NULL,
+  `doi_tuong` char(20) COLLATE utf8_unicode_ci NOT NULL,
+  `que_quan` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `tinh_trang` char(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'hoc',
   PRIMARY KEY (`ma_hocvien`),
   KEY `ma_pc` (`ma_pc_cn`)
@@ -88,19 +100,47 @@ CREATE TABLE IF NOT EXISTS `hoc_vien` (
 -- Dumping data for table `hoc_vien`
 --
 
-INSERT INTO `hoc_vien` (`ma_hocvien`, `ma_pc_cn`, `ho_hocvien`, `ten_hocvien`, `ngay_sinh`, `tinh_trang`) VALUES
-('ccb', 25, 'Mai', 'Cồ', '0000-00-00', 'HOC'),
-('k12.01', 28, 'Nguyễn', 'Tâm', '0000-00-00', 'HOC'),
-('k12.02', 28, 'Lâm', 'Như', '0000-00-00', 'HOC'),
-('k12.03', 28, 'Trần', 'Trụi', '0000-00-00', 'HOC'),
-('k12.05', 30, 'Bụi', 'Đời', '0000-00-00', 'HOC'),
-('k12.06', 30, 'Tín', 'Phạm', '0000-00-00', 'HOC'),
-('k12.07', 28, 'Huỳnh', 'Tuấn', '0000-00-00', 'HOC'),
-('k12.08', 28, 'Tuấn', 'Vũ', '0000-00-00', 'HOC'),
-('k13.01', 29, 'Trần Minh', 'Tím', '0000-00-00', 'HOC'),
-('k13.02', 29, 'Đặng', 'Hùng', '0000-00-00', 'HOC'),
-('k13.03', 29, 'Đặng', 'Mình', '0000-00-00', 'HOC'),
-('k15.01', 25, 'Đoàn', 'Dự', '0000-00-00', 'HOC');
+INSERT INTO `hoc_vien` (`ma_hocvien`, `ma_pc_cn`, `ho_hocvien`, `ten_hocvien`, `ngay_sinh`, `doi_tuong`, `que_quan`, `tinh_trang`) VALUES
+('140301', 36, 'Lê Thành', 'Công', '0000-00-00', '', '', 'HOC'),
+('140302', 36, 'Lê Minh', 'Dương', '0000-00-00', '', '', 'HOC'),
+('140303', 36, 'Lê Văn', 'Giàu', '0000-00-00', '', '', 'HOC'),
+('140304', 36, 'Võ Hữu', 'Hưng', '0000-00-00', '', '', 'HOC'),
+('140305', 36, 'Phạm Chí', 'Miền', '0000-00-00', '', '', 'HOC'),
+('140306', 36, 'Nguyễn Thanh', 'Tâm', '0000-00-00', '', '', 'HOC'),
+('140307', 36, 'Phan Văn', 'Thắm', '0000-00-00', '', '', 'HOC'),
+('140308', 36, 'Dư Văn', 'Toàn', '0000-00-00', '', '', 'HOC'),
+('140501', 37, 'Nguyễn Văn', 'Khắp', '0000-00-00', '', '', 'HOC'),
+('140502', 37, 'Nguyễn My', 'Sol', '0000-00-00', '', '', 'HOC'),
+('140503', 37, 'Trang Sỹ Ngọc', 'Ẩn', '0000-00-00', '', '', 'HOC'),
+('140504', 37, 'Lê Minh', 'Quân', '0000-00-00', '', '', 'HOC'),
+('140505', 37, 'Trịnh Thanh', 'Liêm', '0000-00-00', '', '', 'HOC'),
+('140506', 37, 'Võ Tuấn', 'Anh', '0000-00-00', '', '', 'HOC'),
+('140507', 37, 'Trần Đắc', 'Duy', '0000-00-00', '', '', 'HOC'),
+('140508', 37, 'Nguyễn Thanh', 'Vĩnh', '0000-00-00', '', '', 'HOC'),
+('140509', 37, 'Nguyễn Công', 'Hậu', '0000-00-00', '', '', 'HOC'),
+('140510', 37, 'Trần Hữu', 'Đức', '0000-00-00', '', '', 'HOC'),
+('140511', 37, 'Nguyễn Lê Anh', 'Tuấn', '0000-00-00', '', '', 'HOC'),
+('150401', 38, 'Lê Công Tấn', 'Anh', '0000-00-00', '', '', 'HOC'),
+('150402', 38, 'Phan Tấn', 'Đạt', '0000-00-00', '', '', 'HOC'),
+('150403', 38, 'Võ Khánh', 'Duy', '0000-00-00', '', '', 'HOC'),
+('150404', 38, 'Trần Vũ An', 'Khang', '0000-00-00', '', '', 'HOC'),
+('150405', 38, 'Trần Văn Nhựt', 'Khanh', '0000-00-00', '', '', 'HOC'),
+('150406', 38, 'Nguyễn Phú', 'Khánh', '0000-00-00', '', '', 'HOC'),
+('150407', 38, 'Lê Chí', 'Linh', '0000-00-00', '', '', 'HOC'),
+('150408', 38, 'Lê Ý', 'Nguyện', '0000-00-00', '', '', 'HOC'),
+('150409', 38, 'Nguyễn Hoàng', 'Sang', '0000-00-00', '', '', 'HOC'),
+('150410', 38, 'Võ Thanh', 'Sang', '0000-00-00', '', '', 'HOC'),
+('150411', 38, 'Phạm Tấn', 'Tài', '0000-00-00', '', '', 'HOC'),
+('150412', 38, 'Nguyễn Tấn', 'Thịnh', '0000-00-00', '', '', 'HOC'),
+('150501', 39, 'Nguyễn Châu Tuấn', 'Duy', '0000-00-00', '', '', 'NGHI'),
+('150502', 39, 'Lê Minh', 'Hiếu', '0000-00-00', '', '', 'HOC'),
+('150503', 39, 'Bùi Thị Bạch', 'Huyền', '0000-00-00', '', '', 'HOC'),
+('150504', 39, 'Nguyễn Quốc', 'Khánh', '0000-00-00', '', '', 'HOC'),
+('150505', 39, 'Đặng Minh', 'Không', '0000-00-00', '', '', 'HOC'),
+('150506', 39, 'Lê Vũ', 'Linh', '0000-00-00', '', '', 'HOC'),
+('150507', 39, 'Nguyễn Thanh', 'Lâm', '0000-00-00', '', '', 'HOC'),
+('150508', 39, 'Trương Thanh', 'Nam', '0000-00-00', '', '', 'HOC'),
+('150509', 39, 'Ngô Đình Hữu', 'Nghĩa', '0000-00-00', '', '', 'HOC');
 
 -- --------------------------------------------------------
 
@@ -122,7 +162,8 @@ INSERT INTO `khoa_hoc` (`ma_khoa`, `ten_khoa`) VALUES
 ('K12', 'Khóa 12'),
 ('K13', 'Khóa 13'),
 ('K14', 'Khóa 14'),
-('K15', 'Khóa 15');
+('K15', 'Khóa 15'),
+('k16', 'Khóa 16');
 
 -- --------------------------------------------------------
 
@@ -142,8 +183,7 @@ CREATE TABLE IF NOT EXISTS `lop` (
 
 INSERT INTO `lop` (`ma_lop`, `ten_lop`) VALUES
 ('KTSCLRMT', 'Kỹ Thuật Sơ Cấp Lắp Ráp Máy Tính'),
-('TKMMT', 'Thiết Kế Mạng Máy Tính'),
-('UDPM', 'Ứng dụng phần mềm');
+('UDPM', 'Ứng Dụng Phần Mềm');
 
 -- --------------------------------------------------------
 
@@ -154,7 +194,8 @@ INSERT INTO `lop` (`ma_lop`, `ten_lop`) VALUES
 CREATE TABLE IF NOT EXISTS `mon_hoc` (
   `ma_mon` char(30) COLLATE utf8_unicode_ci NOT NULL,
   `ten_mon` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
-  `so_tiet` int(11) NOT NULL,
+  `ly_thuyet` int(11) NOT NULL,
+  `thuc_hanh` int(11) NOT NULL,
   PRIMARY KEY (`ma_mon`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -162,11 +203,12 @@ CREATE TABLE IF NOT EXISTS `mon_hoc` (
 -- Dumping data for table `mon_hoc`
 --
 
-INSERT INTO `mon_hoc` (`ma_mon`, `ten_mon`, `so_tiet`) VALUES
-('CSDL', 'Cơ Sở Dữ Liệu', 0),
-('LTVBN', 'Lập Trình VN.NET', 90),
-('LTW', 'Lập Trình Web', 0),
-('PTTKHTTT', 'Phân Tích Thiết Kế HTTT', 0);
+INSERT INTO `mon_hoc` (`ma_mon`, `ten_mon`, `ly_thuyet`, `thuc_hanh`) VALUES
+('CSDL', 'Cơ Sở Dữ Liệu', 60, 100),
+('CTDLGT', 'Cấu Trúc Dữ Liệu & Giải Thuật', 30, 30),
+('LTVBN', 'Lập Trình VN.NET', 10, 30),
+('PTTKHTTT', 'Phân Tích Thiết Kế HTTT', 10, 30),
+('TKW', 'Thiết Kế Web', 30, 60);
 
 -- --------------------------------------------------------
 
@@ -186,11 +228,8 @@ CREATE TABLE IF NOT EXISTS `phan_cong` (
 --
 
 INSERT INTO `phan_cong` (`sdt`, `ma_mon`) VALUES
-('0976586653', 'CSDL'),
-('0989826331', 'CSDL'),
-('0976586653', 'LTVBN'),
-('0976586653', 'LTW'),
-('0989826331', 'LTW');
+('01214972969', 'PTTKHTTT'),
+('01214972969', 'TKW');
 
 -- --------------------------------------------------------
 
@@ -207,19 +246,19 @@ CREATE TABLE IF NOT EXISTS `phan_cong_cn` (
   UNIQUE KEY `ma_pc` (`ma_pc_cn`),
   KEY `ma_khoa` (`ma_khoa`),
   KEY `sdt` (`sdt`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=31 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=42 ;
 
 --
 -- Dumping data for table `phan_cong_cn`
 --
 
 INSERT INTO `phan_cong_cn` (`ma_pc_cn`, `sdt`, `ma_lop`, `ma_khoa`) VALUES
-(28, '0989826331', 'KTSCLRMT', 'K12'),
-(29, '0989826331', 'KTSCLRMT', 'K13'),
-(26, '0123456789', 'TKMMT', 'K12'),
-(27, '0123456789', 'TKMMT', 'K14'),
-(30, '0989826331', 'UDPM', 'K12'),
-(25, '0989826331', 'UDPM', 'K15');
+(41, '01299506597', 'KTSCLRMT', 'K13'),
+(36, '01214972969', 'KTSCLRMT', 'K14'),
+(38, '01682836876', 'KTSCLRMT', 'K15'),
+(40, '0949845449', 'UDPM', 'K13'),
+(37, '01214972969', 'UDPM', 'K14'),
+(39, '01682836876', 'UDPM', 'K15');
 
 -- --------------------------------------------------------
 
@@ -259,6 +298,7 @@ CREATE TABLE IF NOT EXISTS `so_theo_doi` (
   `ma_khoa` char(11) COLLATE utf8_unicode_ci NOT NULL,
   `ma_mon` char(30) COLLATE utf8_unicode_ci NOT NULL,
   `ma_phong` char(10) COLLATE utf8_unicode_ci NOT NULL,
+  `loai` char(5) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'LT',
   `quan_so` int(11) NOT NULL,
   `hien_dien` int(11) NOT NULL,
   `vang` int(11) NOT NULL,
@@ -275,17 +315,22 @@ CREATE TABLE IF NOT EXISTS `so_theo_doi` (
   KEY `ma_khoa` (`ma_khoa`),
   KEY `ma_lop` (`ma_lop`),
   KEY `ma_buoi` (`ma_buoi`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=43 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `so_theo_doi`
 --
 
-INSERT INTO `so_theo_doi` (`ma_theodoi`, `ngay`, `ma_buoi`, `ma_lop`, `sdt`, `ma_khoa`, `ma_mon`, `ma_phong`, `quan_so`, `hien_dien`, `vang`, `danh_sach_vang`, `de_cuong`, `giao_an`, `so_tay`, `ghi_chu`) VALUES
-(34, '2015-06-03', 'CHIEU', 'KTSCLRMT', '0989826331', 'K13', 'CSDL', 'H1', 3, 3, 0, '', 1, 1, 1, ''),
-(32, '2015-06-03', 'SANG', 'KTSCLRMT', '0989826331', 'K13', 'CSDL', 'H1', 3, 2, 1, '', 1, 1, 1, ''),
-(42, '2015-06-04', 'CHIEU', 'KTSCLRMT', '0989826331', 'K13', 'CSDL', 'HT3', 3, 3, 0, '', 1, 1, 1, ''),
-(40, '2015-06-04', 'SANG', 'KTSCLRMT', '0989826331', 'K13', 'CSDL', 'H1', 3, 2, 1, '', 1, 1, 1, '');
+INSERT INTO `so_theo_doi` (`ma_theodoi`, `ngay`, `ma_buoi`, `ma_lop`, `sdt`, `ma_khoa`, `ma_mon`, `ma_phong`, `loai`, `quan_so`, `hien_dien`, `vang`, `danh_sach_vang`, `de_cuong`, `giao_an`, `so_tay`, `ghi_chu`) VALUES
+(5, '2015-06-21', 'CHIEU', 'KTSCLRMT', '01214972969', 'K14', 'PTTKHTTT', 'H1', 'TH', 8, 8, 0, '', 1, 1, 1, ''),
+(7, '2015-06-21', 'CHIEU', 'KTSCLRMT', '01214972969', 'K14', 'TKW', 'H1', 'LT', 8, 8, 0, '', 1, 1, 1, ''),
+(9, '2015-06-21', 'CHIEU', 'UDPM', '01214972969', 'K14', 'PTTKHTTT', 'H1', 'TH', 11, 8, 3, '', 1, 1, 1, ''),
+(4, '2015-06-21', 'SANG', 'KTSCLRMT', '01214972969', 'K14', 'PTTKHTTT', 'H1', 'LT', 8, 8, 0, '', 1, 1, 1, ''),
+(6, '2015-06-21', 'SANG', 'KTSCLRMT', '01214972969', 'K14', 'TKW', 'H1', 'LT', 8, 7, 1, '', 1, 1, 1, ''),
+(8, '2015-06-21', 'SANG', 'UDPM', '01214972969', 'K14', 'PTTKHTTT', 'H1', 'LT', 11, 11, 0, '', 1, 1, 1, ''),
+(2, '2015-06-22', 'CHIEU', 'KTSCLRMT', '01214972969', 'K14', 'PTTKHTTT', 'H2', 'TH', 8, 6, 2, '', 1, 1, 1, ''),
+(1, '2015-06-22', 'SANG', 'KTSCLRMT', '01214972969', 'K14', 'PTTKHTTT', 'H1', 'LT', 8, 7, 1, '', 1, 1, 1, ''),
+(3, '2015-06-22', 'SANG', 'KTSCLRMT', '01214972969', 'K14', 'TKW', 'H1', 'LT', 8, 7, 1, '', 1, 1, 1, '');
 
 --
 -- Constraints for dumped tables

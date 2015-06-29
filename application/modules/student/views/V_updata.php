@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>FORM UPDATA</title>
+		<title>CẬP NHẬT HỌC VIÊN</title>
 
 		<!-- Bootstrap CSS -->
 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
@@ -20,17 +20,26 @@
 			.error{
 				color: red;
 			}
+			.tbl_more{
+				display: none;
+			}
+			.click-show-more{
+				position: absolute;
+				top: 0px;
+				right: 0px;
+			}
 		</style>
 	</head>
 	<body>
 	<div class="container">
 	  <!-- Stack the columns on mobile by making one full-width and the other half-width -->
-		<?php echo form_open('student/'.$cap_nhat,'class="navbar-form "'); ?>
+		
 		<div class="row">
+			<?php echo form_open('student/'.$cap_nhat,'class="navbar-form"'); ?>
 			<h1 class="text-center ">
-				<a href="<?= base_url('/home'); ?>">FORM CẬP NHẬT HỌC VIÊN</a>
+				<a href="<?= base_url('/home'); ?>">CẬP NHẬT HỌC VIÊN</a><button type="button" class="btn btn-default btn-xs click-show-more ">Ẩn ▲</button>
 			</h1>
-			<div class="col-xs-12 col-sm-5 col-md-5">
+			<div class="col-xs-12 col-sm-5 col-md-5  tbl_up">
 				<h5>Mã học viên:</h5>
 				<?= form_error('ma_hocvien','<div class="error">', '</div>'); ?>
 				<?= form_input($ma_hocvien); ?>
@@ -40,10 +49,11 @@
 				<h5>Tên:</h5>
 				<?= form_error('ten_hocvien','<div class="error">', '</div>'); ?>
 				<?= form_input($ten_hocvien); ?>
-				
-				
+				</br></br>
+				<?= form_submit($sm); ?>
 			</div>
-			<div class="col-xs-12 col-sm-5 col-md-5">
+
+			<div class="col-xs-12 col-sm-5 col-md-5 tbl_up">
 				<h5>Khóa:</h5>
 				<?= form_error('ma_khoa','<div class="error">', '</div>'); ?>
 				<?= form_dropdown('ma_khoa', $khoa_hoc, $v_khoa_hoc ,'class="form-control" id="ma_khoa_student" ') ?>
@@ -52,19 +62,14 @@
 				<?= form_dropdown('ma_lop', $lop_hoc, $v_lop_hoc ,'class="form-control" id="ma_lop_student"') ?>
 				<h5>Tình trạng học:</h5>
 				<?= form_dropdown('tinh_trang', $tinh_trang, $v_tinh_trang ,'class="form-control" ') ?>
-				
 			</div>
 
-			
+			</form>
 		</div>
-		</br>
-		<div>
-			<?=  form_submit($sm); ?>
-		</div>
-		</form>
+
 		<div class="row">
 			<div class="col-xs-12 col-sm-10 col-md-10">
-				<h3><span id="class_name">DS LỚP <?= $v_lop_hoc.'_'.$v_khoa_hoc ?>:</span></h3>
+				<h3><span id="class_name">DANH SÁCH LỚP <?= $v_lop_hoc.'_'.$v_khoa_hoc ?>:</span></h3>
 				<div class="table-responsive">
 				<table class="table table-bordered table-hover">
 			      <thead>
@@ -83,8 +88,8 @@
 			      </tbody>
 			    </table>
 		    </div>
-			</div>
 		</div>
+
 	<div>
 		
 		

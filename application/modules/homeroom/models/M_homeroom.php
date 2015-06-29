@@ -28,13 +28,15 @@ class M_homeroom extends CI_Model {
 		$this->db->select('ma_pc_cn');
 		$temp = $this->db->get('phan_cong_cn');
 		if ($temp->num_rows()!=0) {
-			return $temp->result()[0]->ma_pc_cn;
+			$arr = $temp->result();
+			return $arr[0]->ma_pc_cn;
 		}
 		return null;
 	}
 	public function get_homeroom($data){
 		$this->db->where('ma_pc_cn', $data);
-		return $this->db->get('phan_cong_cn')->result()[0];
+		$arr = $this->db->get('phan_cong_cn')->result();
+		return $arr[0];
 	}
 
 }

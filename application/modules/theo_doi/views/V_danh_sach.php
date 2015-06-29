@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Title Page</title>
+		<title>SỔ THEO DỖI</title>
 
 		<!-- Bootstrap CSS -->
 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
@@ -42,7 +42,7 @@
 			      <thead>
 			        <tr>
 			          <th rowspan="2">Ngày</th>
-			          <th rowspan="2">Buổi</th>
+			          <th rowspan="2">B</th>
 			          <th rowspan="2">QS</th>
 			          <th rowspan="2">HD</th>
 			          <th rowspan="2">V</th>

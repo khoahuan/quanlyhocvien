@@ -6,16 +6,25 @@ class Division extends CI_Controller {
 	{
 		parent::__construct();
 		//Do your magic here
+		$this->load->model('user/M_user');
+        //check quyen dang nhap
+        if(!$this->M_user->check_login()){
+            redirect('user/login','refresh');
+        }
+        $info = $this->session->userdata('user');
+        if($info['cap_bac']==1){
+            redirect('home','refresh');
+        }        
 		$this->load->model('M_division');
 		$this->load->model('subject/M_subject');
-		$this->load->model('user/M_user');
 		$this->load->helper(array('url','form'));
+
 	}
 
 	public function index()
 	{
 		$data['cap_nhat']="them";
-		$v_sm="Add";
+		$v_sm="Thêm";
 		
 		$arr =  array();
         foreach ($this->M_user->list_user() as $k) {
@@ -32,7 +41,7 @@ class Division extends CI_Controller {
 		$data['sm'] = array(
                                 'name'  => 'sm',
                                 'value' => $v_sm,
-                                'class' => 'btn btn-default btn-success'
+                                'class' => 'btn btn-default btn-success tbl_up'
                         );
 		$arr= array('active','success','info','warning','danger');
 		$list_division=$this->M_division->list_division();
@@ -49,7 +58,7 @@ class Division extends CI_Controller {
                   <td>'.$stt++.'</td>
                   <td>'.$ten_giaovien.'</td>
                   <td>'.$ten_mon.'</td>
-                  <td class="text-center"><a  href="'.$url_del.'">Del</a>
+                  <td class="text-center"><a  href="javascript:confirmDelete(\''.$url_del.' \')">Del</a>
                   </td>
                 </tr>';
             $i = ($i==4)? 0:$i;

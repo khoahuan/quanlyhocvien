@@ -22,31 +22,35 @@ class M_theo_doi extends CI_Model {
 	public function get_lop(){
 		return $this->db->get('lop')->result();		
 	}
-	public function get_lop_co_hv($sdt,$ma_khoa){
+	public function get_lop_co_hv($ma_khoa){
 		$this->db->select('l.*');
 		$this->db->distinct();
 		$this->db->join('phan_cong_cn pc', 'hv.ma_pc_cn = pc.ma_pc_cn', 'left');
 		$this->db->join('lop l', 'l.ma_lop = pc.ma_lop', 'left');
 		$this->db->where('pc.ma_khoa', $ma_khoa);
-		$this->db->where('pc.sdt', $sdt);
+		//$this->db->where('pc.sdt', $sdt);
 
 		return $this->db->get('hoc_vien hv')->result();		
 	}
 	public function get_ten_phong($id){
 		$this->db->where('ma_phong', $id);
-		return $this->db->get('phong_hoc')->result()[0]->ten_phong;		
+		$arr = $this->db->get('phong_hoc')->result();	
+		return $arr[0]->ten_phong;		
 	}
 	public function get_ten_mon($id){
 		$this->db->where('ma_mon', $id);
-		return $this->db->get('mon_hoc')->result()[0]->ten_mon;		
+		$arr =  $this->db->get('mon_hoc')->result();
+		return $arr[0]->ten_mon;		
 	}
 	public function get_ten_khoa($id){
 		$this->db->where('ma_khoa', $id);
-		return $this->db->get('khoa_hoc')->result()[0]->ten_khoa;		
+		$arr =  $this->db->get('khoa_hoc')->result();		
+		return $arr[0]->ten_khoa;		
 	}
 	public function get_ten_lop($id){
 		$this->db->where('ma_lop', $id);
-		return $this->db->get('lop')->result()[0]->ten_lop;		
+		$arr =  $this->db->get('lop')->result();		
+		return $arr[0]->ten_lop;		
 	}
 	public function insert_sotheodoi($data){
 		return $this->db->insert('so_theo_doi', $data);
@@ -94,6 +98,26 @@ class M_theo_doi extends CI_Model {
 		//return $this->db->last_query();
 		return $this->db->get('so_theo_doi')->result();
 	}
+
+	public function list_so_theo_doi_v3($data){
+		$this->db->where('sdt', $data['sdt']);
+		$this->db->where('ma_lop', $data['ma_lop']);
+		$this->db->where('ma_khoa', $data['ma_khoa']);
+		$this->db->where('ma_mon', $data['ma_mon']);
+		if (isset($data['ngay'])) {
+			$this->db->like('ngay', $data['ngay']);
+		}
+		return $this->db->get('so_theo_doi')->result();
+	}
+	public function list_so_theo_doi_v2($data){
+		$this->db->where('sdt', $data['sdt']);
+		$this->db->where('ma_lop', $data['ma_lop']);
+		$this->db->where('ma_khoa', $data['ma_khoa']);
+		$this->db->where('ma_mon', $data['ma_mon']);
+		//$this->db->get('so_theo_doi');
+		//return $this->db->last_query();
+		return $this->db->get('so_theo_doi')->result();
+	}
 	public function check_so_theo_doi($data){
 		$this->db->where('ma_theodoi', $data);
 		return $this->db->get('so_theo_doi')->num_rows();
@@ -116,11 +140,13 @@ class M_theo_doi extends CI_Model {
 		$this->db->where('ma_mon', $ma_mon);
 		$this->db->where('ma_lop', $ma_lop);
 		$this->db->where('ma_buoi', $ma_buoi);
-		return $this->db->get('so_theo_doi')->result()[0];
+		$arr = $this->db->get('so_theo_doi')->result();
+		return $arr[0];
 	}
 	public function get_so_theo_doi_2($data){
 		$this->db->where('ma_theodoi', $data);
-		return $this->db->get('so_theo_doi')->result()[0];
+		$arr = $this->db->get('so_theo_doi')->result();
+		return $arr[0];
 	}
 	
 }

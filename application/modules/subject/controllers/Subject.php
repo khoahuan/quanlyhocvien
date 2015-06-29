@@ -6,9 +6,19 @@ class Subject extends CI_Controller {
 	{
 		parent::__construct();
 		//Do your magic here
+        $this->load->model('user/M_user');
+        //check quyen dang nhap
+        if(!$this->M_user->check_login()){
+            redirect('user/login','refresh');
+        }
+        $info = $this->session->userdata('user');
+        if($info['cap_bac']==1){
+            redirect('home','refresh');
+        }
 		$this->load->helper(array('form','url'));
 		$this->load->library('form_validation');
 		$this->load->model('M_subject');
+
 	}
 
 	public function index($tam = null,$ma_mon = null)
@@ -19,16 +29,19 @@ class Subject extends CI_Controller {
         }
 		
 		$ten_mon = '';
+        $ly_thuyet = '';
+        $thuc_hanh = '';
 		$data['ma_mon']=array('type'  => 'text',
                                 'name'  => 'ma_mon',
                                 'id'    => 'ma_mon',
                                 'class' => 'form-control',
                                 'placeholder' => 'Nhập mã môn'
                             );
+        
 		$data['sm'] = array(
                                 'name'  => 'sm',
-                                'value' => 'Add',
-                                'class' => ' btn-default btn-success'
+                                'value' => 'Thêm',
+                                'class' => 'btn btn-default btn-success  tbl_up'
                         );
 		if ($ma_mon != null && $tam!="del") {
 			if ($this->M_subject->check_subject($ma_mon)==0) {
@@ -37,6 +50,8 @@ class Subject extends CI_Controller {
 			$info = $this->M_subject->get_info($ma_mon);
 			$ma_mon = $info->ma_mon;
 			$ten_mon = $info->ten_mon;
+            $thuc_hanh = $info->thuc_hanh;
+            $ly_thuyet = $info->ly_thuyet;
 			$data['cap_nhat']="sua";
 			$data['ma_mon']=array('type'  => 'text',
                                 'name'  => 'ma_mon',
@@ -48,8 +63,8 @@ class Subject extends CI_Controller {
                             );
 			$data['sm'] = array(
                                 'name'  => 'sm',
-                                'value' => 'Edit',
-                                'class' => ' btn-default btn-success'
+                                'value' => 'Cập nhật',
+                                'class' => 'btn btn-default btn-success tbl_up'
                         );
 		}
 		
@@ -60,7 +75,16 @@ class Subject extends CI_Controller {
                                 'placeholder' => 'Nhập tên môn',
                                 'value' => $ten_mon
                             );
-		
+		$data['ly_thuyet']=array('type'  => 'text',
+                                'name'  => 'ly_thuyet',
+                                'class' => 'form-control',
+                                'value' => $ly_thuyet
+                            );
+        $data['thuc_hanh']=array('type'  => 'text',
+                                'name'  => 'thuc_hanh',
+                                'class' => 'form-control',
+                                'value' => $thuc_hanh
+                            );
 		$arr= array('active','success','info','warning','danger');
 		$list_subject=$this->M_subject->list_subject();
 		$stt=1;
@@ -73,8 +97,10 @@ class Subject extends CI_Controller {
                   <td>'.$stt++.'</td>
                   <td>'.$k->ma_mon.'</td>
                   <td>'.$k->ten_mon.'</td>
+                  <td>'.$k->ly_thuyet.'</td>
+                  <td>'.$k->thuc_hanh.'</td>
                   <td class="text-center"><a href="'.$url_up.'">Edit</a>
-                        || <a href="'.$url_del.'">Del</a>
+                        || <a href="javascript:confirmDelete(\''.$url_del.' \')">Del</a>
                   </td>
                 </tr>';
             $i = ($i==4)? 0:$i;
@@ -86,6 +112,8 @@ class Subject extends CI_Controller {
 	public function them(){
 		$this->form_validation->set_rules('ma_mon', 'ma mon', 'trim|required|min_length[2]|max_length[10]');
         $this->form_validation->set_rules('ten_mon', 'ten mon', 'trim|required|min_length[3]|max_length[150]');
+        $this->form_validation->set_rules('ly_thuyet', 'tiet ly thuyet', 'trim|required|integer');
+        $this->form_validation->set_rules('thuc_hanh', 'tiet thuc hanh', 'trim|required|integer');
         if ($this->form_validation->run() == FALSE)
         {
             return $this->index();
@@ -114,7 +142,9 @@ class Subject extends CI_Controller {
                 return;
         }
 		$this->form_validation->set_rules('ten_mon', 'ten mon', 'trim|required|min_length[3]|max_length[150]');
-		if ($this->form_validation->run() == FALSE)
+		 $this->form_validation->set_rules('ly_thuyet', 'tiet ly thuyet', 'trim|required|integer');
+        $this->form_validation->set_rules('thuc_hanh', 'tiet thuc hanh', 'trim|required|integer');
+        if ($this->form_validation->run() == FALSE)
         {
             return $this->index(null,$fld['ma_mon']);
         }

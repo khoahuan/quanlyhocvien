@@ -8,6 +8,7 @@ class User extends CI_Controller {
 		parent::__construct();
 		//Do your magic here
 		$this->load->model('M_user');
+		
 		$this->load->helper(array('form', 'url'));
         $this->load->library('form_validation');
         
@@ -50,8 +51,8 @@ class User extends CI_Controller {
                         );
 		$data['sm'] = array(
                                 'name'  => 'sm',
-                                'value' => 'Edit',
-                                'class' => ' btn-default btn-success'
+                                'value' => 'Cập nhật',
+                                'class' => ' btn btn-default btn-success tbl_up'
                         );
 
 		$this->load->view('V_profile',$data,FALSE);
@@ -62,6 +63,10 @@ class User extends CI_Controller {
 		if ($this->M_user->check_login()==1) {
 			redirect('/home','refresh');
 		}
+		$info = $this->session->userdata('user');
+        if($info['cap_bac']==1){
+            redirect('home','refresh');
+        } 
 		$data['sdt']= array(
 								'type'  => 'text',
                                 'name'  => 'sdt',
@@ -77,17 +82,18 @@ class User extends CI_Controller {
                                 'placeholder'=>'Mật khẩu'
                         );
 		$data['v_error']=((isset($v_error)?$v_error:""));
-		$this->form_validation->set_rules('sdt', 'số điện thoại', 'required');
-		$this->form_validation->set_rules('mat_khau', 'mật khẩu', 'required');
-		if ($this->form_validation->run() == FALSE)
-        {
-			$this->load->view('V_login',$data, FALSE);
-        }else{
-        	$this->load->view('V_login',$data, FALSE);	
-        }
+		$this->load->view('V_login',$data, FALSE);
 	}
 	public function active_login()
 	{
+		
+		$this->form_validation->set_rules('sdt', 'số điện thoại', 'numeric|trim|required|min_length[10]|max_length[11]');
+		$this->form_validation->set_rules('mat_khau', 'mật khẩu', 'trim|required|min_length[3]|max_length[20]');
+		if ($this->form_validation->run() == FALSE)
+        {
+			return $this->login();
+
+        }
 		$data['v_error']='';
 		$arr = $this->input->post(NULL, FALSE);
 		if (empty($arr)) {
@@ -147,14 +153,21 @@ class User extends CI_Controller {
 	}
 
 	public function updata($tam = null,$sdt = null){
-
+		//check quyen dang nhap
+        if(!$this->M_user->check_login()){
+            redirect('user/login','refresh');
+        }
+        $info = $this->session->userdata('user');
+        if($info['cap_bac']==1){
+            redirect('home','refresh');
+        } 
 		$mail='';
 		$ho='';
 		$ten='';
 		$mat_khau='';
 		$cap_bac='';
 		$data['cap_nhat']="them";
-		$v_sm="Add";
+		$v_sm="Thêm";
 		if (!isset($sdt)) {
             $sdt = $this->uri->segment(3,null);
         }
@@ -227,7 +240,7 @@ class User extends CI_Controller {
 		$data['sm'] = array(
                                 'name'  => 'sm',
                                 'value' => $v_sm,
-                                'class' => 'btn btn-default btn-success'
+                                'class' => 'btn btn-default btn-success tbl_up'
                         );
 		$arr= array('active','success','info','warning','danger');
 		$list_user=$this->M_user->list_user();
@@ -246,7 +259,7 @@ class User extends CI_Controller {
                   <td>'.$k->ten.'</td>
                   <td>'.$cap_bac.'</td>
                   <td class="text-center"><a href="'.$url_up.'">Edit</a>
-                        || <a href="'.$url_del.'">Del</a>
+                        || <a href="javascript:confirmDelete(\''.$url_del.' \')">Del</a>
                   </td>
                 </tr>';
             $i = ($i==4)? 0:$i;
@@ -256,11 +269,11 @@ class User extends CI_Controller {
 	}
 
 	public function them(){
-		$this->form_validation->set_rules('sdt', 'Phone', 'trim|required|min_length[10]|max_length[11]');
+		$this->form_validation->set_rules('sdt', 'So Dien Thoai', 'trim|required|min_length[10]|max_length[11]');
 		$this->form_validation->set_rules('mail', 'Email', 'trim|required|valid_email');
-		$this->form_validation->set_rules('ho', 'Last name', 'trim|required|min_length[3]|max_length[50]');
-		$this->form_validation->set_rules('ten', 'Frist name', 'trim|required|min_length[2]|max_length[15]');
-		$this->form_validation->set_rules('mat_khau', 'Password', 'trim|required|min_length[2]|max_length[12]');
+		$this->form_validation->set_rules('ho', 'Ho', 'trim|required|min_length[3]|max_length[50]');
+		$this->form_validation->set_rules('ten', 'Ten', 'trim|required|min_length[2]|max_length[15]');
+		$this->form_validation->set_rules('mat_khau', 'Mat Khau', 'trim|required|min_length[2]|max_length[12]');
         if ($this->form_validation->run() == FALSE)
         {
             return $this->updata();
@@ -290,8 +303,8 @@ class User extends CI_Controller {
                 return;
         }
 		$this->form_validation->set_rules('mail', 'Email', 'trim|required|valid_email');
-		$this->form_validation->set_rules('ho', 'Last name', 'trim|required|min_length[3]|max_length[50]');
-		$this->form_validation->set_rules('ten', 'Frist name', 'trim|required|min_length[2]|max_length[15]');
+		$this->form_validation->set_rules('ho', 'Ho', 'trim|required|min_length[3]|max_length[50]');
+		$this->form_validation->set_rules('ten', 'Ten', 'trim|required|min_length[2]|max_length[15]');
         
 		if ($this->form_validation->run() == FALSE)
         {

@@ -7,9 +7,19 @@ class Classroom extends CI_Controller {
 	{
 		parent::__construct();
 		//Do your magic here
+        $this->load->model('user/M_user');
+        //check quyen dang nhap
+        if(!$this->M_user->check_login()){
+            redirect('user/login','refresh');
+        }
+        $info = $this->session->userdata('user');
+        if($info['cap_bac']==1){
+            redirect('home','refresh');
+        }
 		$this->load->helper(array('form','url'));
 		$this->load->library('form_validation');
 		$this->load->model('M_classroom');
+
 	}
 
 	public function index($tam = null,$ma_phong=null)
@@ -28,8 +38,8 @@ class Classroom extends CI_Controller {
                             );
 		$data['sm'] = array(
                                 'name'  => 'sm',
-                                'value' => 'Add',
-                                'class' => ' btn-default btn-success'
+                                'value' => 'Thêm',
+                                'class' => 'btn btn-default btn-success tbl_up'
                         );
 		if ($ma_phong != null && $tam!="del") {
 			if ($this->M_classroom->check_classroom($ma_phong)==0) {
@@ -49,8 +59,8 @@ class Classroom extends CI_Controller {
                             );
 			$data['sm'] = array(
                                 'name'  => 'sm',
-                                'value' => 'Edit',
-                                'class' => ' btn-default btn-success'
+                                'value' => 'Cập nhật',
+                                'class' => 'btn btn-default btn-success tbl_up'
                         );
 		}
 		
@@ -75,7 +85,7 @@ class Classroom extends CI_Controller {
                   <td>'.$k->ma_phong.'</td>
                   <td>'.$k->ten_phong.'</td>
                   <td class="text-center"><a href="'.$url_up.'">Edit</a>
-                        || <a href="'.$url_del.'">Del</a>
+                        || <a href="javascript:confirmDelete(\''.$url_del.' \')">Del</a>
                   </td>
                 </tr>';
             $i = ($i==4)? 0:$i;

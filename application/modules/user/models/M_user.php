@@ -54,13 +54,15 @@ class M_user extends CI_Model {
 	public function get_info($sdt =null){
 		if (isset($sdt)) {
 			$this->db->where('sdt', $sdt);
-			return $this->db->get('giao_vien')->result()[0];
+			$arr =  $this->db->get('giao_vien')->result();
+			return $arr[0];
 		}
 		if (!$this->check_login())
 	        return 0;
 	    $user_info=$this->session->userdata('user');
 		$this->db->where('sdt', $user_info['sdt']);
-		return $this->db->get('giao_vien')->result()[0];
+		$arr =  $this->db->get('giao_vien')->result();
+		return $arr[0];
 	}
 	public function list_user(){
 		return $this->db->get('giao_vien')->result();

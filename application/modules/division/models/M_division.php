@@ -23,7 +23,8 @@ class M_division extends CI_Model {
 	public function get_info($data){
 		$this->db->where('sdt', $data->sdt);
 		$this->db->where('ma_mon', $data->ma_mon);
-		return $this->db->get('phan_cong')->result()[0];
+		$arr = $this->db->get('phan_cong')->result();
+		return $arr[0];
 	}
 
 }

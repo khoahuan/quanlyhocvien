@@ -24,7 +24,8 @@ class M_classroom extends CI_Model {
 	}
 	public function get_info($data){
 		$this->db->where('ma_phong', $data);
-		return $this->db->get('phong_hoc')->result()[0];
+		$arr = $this->db->get('phong_hoc')->result();
+		return $arr[0];
 	}
 
 }
